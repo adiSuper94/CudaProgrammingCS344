@@ -3,10 +3,6 @@
 #include <iostream>
 #include "timer.h"
 #include "utils.h"
-#include <string>
-#include <stdio.h>
-#include "reference_calc.h"
-#include "compare.h"
 
 void your_rgba_to_greyscale(const uchar4 * const h_rgbaImage, 
                             uchar4 * const d_rgbaImage,
@@ -15,6 +11,8 @@ void your_rgba_to_greyscale(const uchar4 * const h_rgbaImage,
 
 //include the definitions of the above functions for this homework
 #include "HW1.cpp"
+#include "reference_calc.h"
+#include "compare.h"
 
 int main(int argc, char **argv) {
   uchar4        *h_rgbaImage, *d_rgbaImage;
@@ -84,7 +82,7 @@ int main(int argc, char **argv) {
   postProcess(reference_file, h_greyImage);
 
   //generateReferenceImage(input_file, reference_file);
-  compareImages(reference_file, output_file, useEpsCheck, perPixelError, 
+  compareImages(reference_file, output_file, useEpsCheck, perPixelError,
                 globalError);
 
   cleanup();

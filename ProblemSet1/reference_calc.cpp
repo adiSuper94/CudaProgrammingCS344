@@ -1,4 +1,4 @@
-// for uchar4 struct
+struct uchar4 ;
 #include <cuda_runtime.h>
 
 void referenceCalculation(const uchar4* const rgbaImage,
