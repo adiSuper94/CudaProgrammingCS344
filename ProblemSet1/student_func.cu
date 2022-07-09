@@ -33,8 +33,8 @@
 
 #include "utils.h"
 
-__global__ void rgba_to_greyscale(const uchar4 *const rgbaImage, unsigned char *const greyImage,
-                                  int numRows, int numCols) {
+__global__ void rgba_to_greyscale(const uchar4 *const rgbaImage, unsigned char *const greyImage, int numRows,
+                                  int numCols) {
   long index = blockDim.x * blockIdx.x + threadIdx.x;
   uchar4 rbgaValue = rgbaImage[index];
   if (index < numCols * numRows) {
