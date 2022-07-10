@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <cassert>
 // for uchar4 struct
-#include <cuda_runtime.h>
+#include "reference_calc.h"
 
 void channelConvolution(const unsigned char *const channel, unsigned char *const channelBlurred, const size_t numRows,
                         const size_t numCols, const float *filter, const int filterWidth) {
@@ -46,9 +46,9 @@ void referenceCalculation(const uchar4 *const rgbaImage, uchar4 *const outputIma
   // for Red, Green and Blue
   for (size_t i = 0; i < numRows * numCols; ++i) {
     uchar4 rgba = rgbaImage[i];
-    red[i] = rgba.x;
+    red[i] = rgba.z;
     green[i] = rgba.y;
-    blue[i] = rgba.z;
+    blue[i] = rgba.x;
   }
 
   // Now we can do the convolution for each of the color channels
