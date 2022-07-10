@@ -1,0 +1,455 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.2.1
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Sat Jul  9 21:05:56 2022
+
+# Variables
+
+# 'override' directive
+GNUMAKEFLAGS := 
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# environment
+PAPERSIZE = a4
+# environment
+DESKTOP_SESSION = ubuntu
+# default
+.SHELLFLAGS := -c
+# environment
+XDG_SESSION_CLASS = user
+# environment
+SNAP_COMMON = /var/snap/code/common
+# environment
+XDG_SESSION_TYPE = x11
+# environment
+NVM_INC = /home/adisuper/.nvm/versions/node/v16.13.1/include/node
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+IM_CONFIG_PHASE = 1
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+XAUTHORITY = /run/user/1000/gdm/Xauthority
+# environment
+GDMSESSION = ubuntu
+# environment
+XMODIFIERS = @im=ibus
+# makefile
+CURDIR := /home/adisuper/dev/cuda-programming/ProblemSets/ProblemSet2
+# makefile
+SHELL = /bin/sh
+# environment
+SNAP_DATA = /var/snap/code/100
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
+# environment
+JOURNAL_STREAM = 9:61728
+# makefile (from 'Makefile', line 19)
+CUDA_INCLUDEPATH = /usr/local/cuda-5.0/include
+# environment
+XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
+# environment
+SNAP_INSTANCE_NAME = code
+# environment
+SNAP_ARCH = amd64
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# environment
+JAVA_HOME = /opt/jdk-16.0.2
+# makefile (from 'Makefile', line 1)
+NVCC = nvcc
+# automatic
+@F = $(notdir $@)
+# makefile (from 'Makefile', line 30)
+GCC_OPTS = -O3 -Wall -Wextra -m64
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /var/lib/snapd/desktop/applications/code_code.desktop
+# environment
+USERNAME = adisuper
+# environment
+MAKELEVEL := 0
+# environment
+MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
+# environment
+XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# environment
+_ = /snap/code/100/usr/share/code/code
+# environment
+MANAGERPID = 2329
+# environment
+P9K_SSH = 0
+# environment
+LC_NAME = en_GB.UTF-8
+# environment
+OpenCV_INCLUDE_DIRS = /home/adisuper/Work/CudaProgramming/openCVInstallation/build/include
+# environment
+VSCODE_CWD = /home/adisuper
+# environment
+GSETTINGS_SCHEMA_DIR = /snap/code/100/usr/share/glib-2.0/schemas
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+PATH = /home/adisuper/.nvm/versions/node/v16.13.1/bin:/home/adisuper/.cargo/bin:/home/adisuper/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/cuda/bin:/home/adisuper/.local/share/JetBrains/Toolbox/scripts:/opt/jdk-16.0.2/bin:/usr/local/go/bin
+# makefile (from 'Makefile', line 18)
+OPENCV_LIBS = -lopencv_core -lopencv_imgproc -lopencv_highgui
+# environment
+GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
+# environment
+SESSION_MANAGER = local/adisuper-G7-7700:@/tmp/.ICE-unix/2593,unix/adisuper-G7-7700:/tmp/.ICE-unix/2593
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+GDK_PIXBUF_MODULE_FILE = /home/adisuper/snap/code/common/.cache/gdk-pixbuf-loaders.cache
+# environment
+SNAP = /snap/code/100
+# environment
+GOPATH = /usr/local/go/bin
+# environment
+NVM_BIN = /home/adisuper/.nvm/versions/node/v16.13.1/bin
+# environment
+SNAP_VERSION = 92d25e35
+# environment
+XDG_MENU_PREFIX = gnome-
+# environment
+DISABLE_WAYLAND = 1
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+INVOCATION_ID = 5a7e1cfb44314746911910dbfc44ca1b
+# environment
+GDK_PIXBUF_MODULEDIR = /snap/code/100/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
+# environment
+LS_COLORS = 
+# environment
+XDG_SESSION_DESKTOP = ubuntu
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 49713
+# automatic
+%F = $(notdir $%)
+# environment
+DISPLAY = :1
+# environment
+SNAP_INSTANCE_KEY = 
+# environment
+PWD = /home/adisuper/dev/cuda-programming/ProblemSets/ProblemSet2
+# default
+.LOADED := 
+# environment
+SSH_AGENT_PID = 2558
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
+# environment
+GTK_MODULES = gail:atk-bridge
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /home/adisuper
+# environment
+VSCODE_CLI = 1
+# environment
+VSCODE_CODE_CACHE_PATH = /home/adisuper/.config/Code/CachedData/92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9
+# environment
+LOGNAME = adisuper
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
+# environment
+SNAP_CONTEXT = 36WPxmYu8vdirY7L93iVm_ceVE9kB87UK7IrzRcIdRbV7nTRPo5I
+# environment
+NVM_CD_FLAGS = -q
+# automatic
++F = $(notdir $+)
+# environment
+VALGRIND_LIB = /usr/lib/valgrind
+# makefile (from 'Makefile', line 28)
+NVCC_OPTS = -O3 -arch=sm_20 -Xcompiler -Wall -Xcompiler -Wextra -m64
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+SNAP_USER_COMMON = /home/adisuper/snap/code/common
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+LC_TIME = en_GB.UTF-8
+# environment
+SNAP_REAL_HOME = /home/adisuper
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+QT_IM_MODULE = ibus
+# environment
+SNAP_USER_DATA = /home/adisuper/snap/code/100
+# environment
+SHLVL = 0
+# environment
+GNOME_SHELL_SESSION_MODE = ubuntu
+# default
+MAKE_VERSION := 4.2.1
+# environment
+USER = adisuper
+# environment
+SNAP_REVISION = 100
+# environment
+LC_MONETARY = en_GB.UTF-8
+# makefile
+.DEFAULT_GOAL := student
+# environment
+XDG_CURRENT_DESKTOP = Unity
+# makefile (from 'Makefile', line 9)
+OPENCV_INCLUDEPATH = /usr/include
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+LC_TELEPHONE = en_GB.UTF-8
+# default
+MAKE_COMMAND := make
+# environment
+OLDPWD = /home/adisuper
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# environment
+LANGUAGE = en_GB:en
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-cdb1fd96-1.69.0-main.sock
+# environment
+BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
+# makefile
+MAKEFLAGS = pqrR
+# environment
+MFLAGS = -pqrR
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+NVM_DIR = /home/adisuper/.nvm
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+GDK_BACKEND = x11
+# environment
+LC_PAPER = en_GB.UTF-8
+# environment
+LC_IDENTIFICATION = en_GB.UTF-8
+# environment
+QT_ACCESSIBILITY = 1
+# environment
+DEFAULTS_PATH = /usr/share/gconf/ubuntu.default.path
+# default
+MAKEFILES := 
+# environment
+SNAP_COOKIE = 36WPxmYu8vdirY7L93iVm_ceVE9kB87UK7IrzRcIdRbV7nTRPo5I
+# environment
+LC_NUMERIC = en_GB.UTF-8
+# automatic
+<F = $(notdir $<)
+# environment
+LC_MEASUREMENT = en_GB.UTF-8
+# environment
+SNAP_NAME = code
+# environment
+LC_ALL = C
+# environment
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# environment
+SNAP_REEXEC = 
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+WINDOWPATH = 2
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# environment
+GJS_DEBUG_OUTPUT = stderr
+# default
+.RECIPEPREFIX := 
+# environment
+ 
+make: *** No rule to make target 'all'.  Stop.
+
+LC_ADDRESS = en_GB.UTF-8
+# makefile (from 'Makefile', line 8)
+OPENCV_LIBPATH = /usr/lib
+# environment
+LANG = C
+# environment
+OpenCV_LIB = /home/adisuper/Work/CudaProgramming/openCVInstallation/build/lib
+# environment
+VSCODE_PID = 49761
+# variable set hash-table stats:
+# Load=144/1024=14%, Rehash=0, Collisions=26/169=15%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 66312, inode 7741890): 21 files, no impossibilities.
+
+# 21 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+HW2.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+student_func.o: student_func.cu reference_calc.cpp utils.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 39):
+	nvcc -c student_func.cu $(NVCC_OPTS)
+
+student: main.o student_func.o compare.o reference_calc.o Makefile
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 33):
+	$(NVCC) -o HW2 main.o student_func.o compare.o reference_calc.o -L $(OPENCV_LIBPATH) $(OPENCV_LIBS) $(NVCC_OPTS)
+
+# Not a target:
+utils.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-09 17:55:40
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+reference_calc.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+compare.o: compare.cpp compare.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 42):
+	g++ -c compare.cpp -I $(OPENCV_INCLUDEPATH) $(GCC_OPTS) -I $(CUDA_INCLUDEPATH)
+
+# Not a target:
+main.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+timer.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+reference_calc.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+student_func.cu:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 48):
+	rm -f *.o *.png hw
+
+main.o: main.cpp timer.h utils.h HW2.cpp
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 36):
+	g++ -c main.cpp $(GCC_OPTS) -I $(OPENCV_INCLUDEPATH) -I $(CUDA_INCLUDEPATH)
+
+reference_calc.o: reference_calc.cpp reference_calc.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 45):
+	g++ -c reference_calc.cpp -I $(OPENCV_INCLUDEPATH) $(GCC_OPTS) -I $(CUDA_INCLUDEPATH)
+
+# Not a target:
+compare.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+compare.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=19/1024=2%, Rehash=0, Collisions=0/49=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 32 / storage = 358 B / avg = 11 B
+# current buf: size = 8162 B / used = 358 B / count = 32 / avg = 11 B
+
+# strcache performance: lookups = 58 / hit rate = 44%
+# hash-table stats:
+# Load=32/8192=0%, Rehash=0, Collisions=1/58=2%
+# Finished Make data base on Sat Jul  9 21:05:56 2022
+
+ 
