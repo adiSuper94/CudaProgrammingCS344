@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.21)
+project(CS344 LANGUAGES CXX CUDA)
+set(CMAKE_CUDA_STANDARD 17)
+
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} ${CMAKE_CUDA_STANDARD_INCLUDE_DIRECTORIES} ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
+
+#add_library(student_func STATIC ${HW1_files} compare.h reference_calc.h HW1.cpp utils.h timer.h student_func.cu)
+#set_property(TARGET student_func PROPERTY CUDA_ARCHITECTURES 52 61 75)
+#set_target_properties(student_func PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+file( GLOB  HW1_hdr ProblemSet1/*.hpp ProblemSet1/*.h )
+file( GLOB  HW1_cu  ProblemSet1/*.cu)
+file(GLOB HW1_files ProblemSet1/main.cpp ProblemSet1/reference_calc.cpp ProblemSet1/compare.cpp)
+add_executable(HW1 ${HW1_files} ${HW1_hdr} ${HW1_cu})
+set_property(TARGET HW1 PROPERTY CUDA_ARCHITECTURES 52 61 75)
+target_link_libraries(HW1 ${OpenCV_LIBS})
+
+file( GLOB  HW2_hdr ProblemSet2/*.hpp ProblemSet2/*.h )
+file( GLOB  HW2_cu  ProblemSet2/*.cu)
+file(GLOB HW2_files ProblemSet2/main.cpp ProblemSet2/reference_calc.cpp ProblemSet2/compare.cpp)
+add_executable(HW2 ${HW2_files} ${HW2_hdr} ${HW2_cu})
+set_property(TARGET HW2 PROPERTY CUDA_ARCHITECTURES 52 61 75)
+target_link_libraries(HW2 ${OpenCV_LIBS})

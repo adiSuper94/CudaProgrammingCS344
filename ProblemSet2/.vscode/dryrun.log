@@ -1,9 +1,0 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/home/adisuper/dev/cuda-programming/ProblemSets/ProblemSet2'
-g++ -c main.cpp -O3 -Wall -Wextra -m64 -I /usr/include -I /usr/local/cuda-5.0/include
-nvcc -c student_func.cu -O3 -arch=sm_20 -Xcompiler -Wall -Xcompiler -Wextra -m64
-g++ -c compare.cpp -I /usr/include -O3 -Wall -Wextra -m64 -I /usr/local/cuda-5.0/include
-g++ -c reference_calc.cpp -I /usr/include -O3 -Wall -Wextra -m64 -I /usr/local/cuda-5.0/include
-nvcc -o HW2 main.o student_func.o compare.o reference_calc.o -L /usr/lib -lopencv_core -lopencv_imgproc -lopencv_highgui -O3 -arch=sm_20 -Xcompiler -Wall -Xcompiler -Wextra -m64
-make: Leaving directory '/home/adisuper/dev/cuda-programming/ProblemSets/ProblemSet2'
- 

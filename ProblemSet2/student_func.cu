@@ -159,8 +159,8 @@ __global__ void separateChannels(const uchar4* const inputImageRGBA, int numRows
   redChannel[i] = inputImageRGBA[i].z;
   greenChannel[i] = inputImageRGBA[i].y;
   blueChannel[i] = inputImageRGBA[i].x;
-  //printf("%d\t%d\t%d\t\n", (int )inputImageRGBA->x, (int)inputImageRGBA->y, (int) inputImageRGBA->z);
-  //printf("%f\t%f\t%f\t\n", (float )redChannel[i], (float)blueChannel[i], (float) greenChannel[i]);
+  // printf("%d\t%d\t%d\t\n", (int )inputImageRGBA->x, (int)inputImageRGBA->y, (int) inputImageRGBA->z);
+  // printf("%f\t%f\t%f\t\n", (float )redChannel[i], (float)blueChannel[i], (float) greenChannel[i]);
   //
   // NOTE: Be careful not to try to access memory that is outside the bounds of
   // the image. You'll want code that performs the following check before accessing
@@ -209,7 +209,6 @@ void allocateMemoryAndCopyToGPU(const size_t numRowsImage, const size_t numColsI
   checkCudaErrors(cudaMalloc(&d_green, sizeof(unsigned char) * numRowsImage * numColsImage));
   checkCudaErrors(cudaMalloc(&d_blue, sizeof(unsigned char) * numRowsImage * numColsImage));
 
-
   // Allocate memory for the filter on the GPU
   // Use the pointer d_filter that we have already declared for you
   // You need to allocate memory for the filter with cudaMalloc
@@ -221,7 +220,7 @@ void allocateMemoryAndCopyToGPU(const size_t numRowsImage, const size_t numColsI
   // Copy the filter on the host (h_filter) to the memory you just allocated
   // on the GPU.  cudaMemcpy(dst, src, numBytes, cudaMemcpyHostToDevice);
   // Remember to use checkCudaErrors!
-  checkCudaErrors(cudaMemset(d_filter, 0, sizeof(float ) * filterWidth * filterWidth));
+  checkCudaErrors(cudaMemset(d_filter, 0, sizeof(float) * filterWidth * filterWidth));
   checkCudaErrors(cudaMemcpy(d_filter, h_filter, sizeof(float) * filterWidth * filterWidth, cudaMemcpyHostToDevice));
   cudaDeviceSynchronize();
 }
