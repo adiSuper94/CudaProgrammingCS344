@@ -21,3 +21,10 @@ file(GLOB HW2_files ProblemSet2/main.cpp ProblemSet2/reference_calc.cpp ProblemS
 add_executable(HW2 ${HW2_files} ${HW2_hdr} ${HW2_cu})
 set_property(TARGET HW2 PROPERTY CUDA_ARCHITECTURES 52 61 75)
 target_link_libraries(HW2 ${OpenCV_LIBS})
+
+file(GLOB  HW3_hdr ProblemSet3/*.hpp ProblemSet2/*.h)
+file(GLOB  HW3_cu  ProblemSet3/*.cu)
+file(GLOB HW3_files ProblemSet3/main.cpp ProblemSet3/loadSaveImage.cpp ProblemSet3/reference_calc.cpp ProblemSet3/compare.cpp)
+add_executable(HW3 ${HW3_files} ${HW3_hdr} ${HW3_cu})
+set_property(TARGET HW3 PROPERTY CUDA_ARCHITECTURES 52 61 75)
+target_link_libraries(HW3 ${OpenCV_LIBS})
