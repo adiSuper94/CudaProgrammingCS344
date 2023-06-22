@@ -1,28 +1,29 @@
+#include <stdio.h>
+
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 #include <vector>
-#include <stdio.h>
+
 #include "cuda_runtime.h"
 
-//The caller becomes responsible for the returned pointer. This
-//is done in the interest of keeping this code as simple as possible.
-//In production code this is a bad idea - we should use RAII
-//to ensure the memory is freed.  DO NOT COPY THIS AND USE IN PRODUCTION
-//CODE!!!
-void loadImageHDR(const std::string &filename,
-                  float **imagePtr,
-                  size_t *numRows, size_t *numCols)
-{
-    cv::Mat originImg = cv::imread(filename.c_str(), CV_LOAD_IMAGE_COLOR | CV_LOAD_IMAGE_ANYDEPTH);
+// The caller becomes responsible for the returned pointer. This
+// is done in the interest of keeping this code as simple as possible.
+// In production code this is a bad idea - we should use RAII
+// to ensure the memory is freed.  DO NOT COPY THIS AND USE IN PRODUCTION
+// CODE!!!
+void loadImageHDR(const std::string &filename, float **imagePtr, size_t *numRows, size_t *numCols) {
+  cv::Mat originImg = cv::imread(filename.c_str(), cv::IMREAD_COLOR | cv::IMREAD_ANYDEPTH);
 
-    cv::Mat image;
+  cv::Mat image;
 
-    if(originImg.type() != CV_32FC3){
-      originImg.convertTo(image,CV_32FC3);
-    } else{
-      image = originImg;
-    }
+  if (originImg.type() != CV_32FC3) {
+    originImg.convertTo(image, CV_32FC3);
+  } else {
+    image = originImg;
+  }
 
   if (image.empty()) {
     std::cerr << "Couldn't open file: " << filename << std::endl;
@@ -42,18 +43,14 @@ void loadImageHDR(const std::string &filename,
   *imagePtr = new float[image.rows * image.cols * image.channels()];
 
   float *cvPtr = image.ptr<float>(0);
-  for (size_t i = 0; i < image.rows * image.cols * image.channels(); ++i)
-    (*imagePtr)[i] = cvPtr[i];
+  for (size_t i = 0; i < image.rows * image.cols * image.channels(); ++i) (*imagePtr)[i] = cvPtr[i];
 
   *numRows = image.rows;
   *numCols = image.cols;
 }
 
-void loadImageRGBA(const std::string &filename,
-                   uchar4 **imagePtr,
-                   size_t *numRows, size_t *numCols)
-{
-  cv::Mat image = cv::imread(filename.c_str(), CV_LOAD_IMAGE_COLOR);
+void loadImageRGBA(const std::string &filename, uchar4 **imagePtr, size_t *numRows, size_t *numCols) {
+  cv::Mat image = cv::imread(filename.c_str(), cv::IMREAD_COLOR);
   if (image.empty()) {
     std::cerr << "Couldn't open file: " << filename << std::endl;
     exit(1);
@@ -70,7 +67,7 @@ void loadImageRGBA(const std::string &filename,
   }
 
   cv::Mat imageRGBA;
-  cv::cvtColor(image, imageRGBA, CV_BGR2RGBA);
+  cv::cvtColor(image, imageRGBA, cv::COLOR_BGR2RGBA);
 
   *imagePtr = new uchar4[image.rows * image.cols];
 
@@ -86,26 +83,22 @@ void loadImageRGBA(const std::string &filename,
   *numCols = image.cols;
 }
 
-void saveImageRGBA(const uchar4* const image,
-                   const size_t numRows, const size_t numCols,
-                   const std::string &output_file)
-{
+void saveImageRGBA(const uchar4 *const image, const size_t numRows, const size_t numCols,
+                   const std::string &output_file) {
   int sizes[2];
   sizes[0] = numRows;
   sizes[1] = numCols;
   cv::Mat imageRGBA(2, sizes, CV_8UC4, (void *)image);
   cv::Mat imageOutputBGR;
-  cv::cvtColor(imageRGBA, imageOutputBGR, CV_RGBA2BGR);
-  //output the image
+  cv::cvtColor(imageRGBA, imageOutputBGR, cv::COLOR_RGBA2BGR);
+  // output the image
   cv::imwrite(output_file.c_str(), imageOutputBGR);
 }
 
-//output an exr file
-//assumed to already be BGR
-void saveImageHDR(const float* const image,
-                  const size_t numRows, const size_t numCols,
-                  const std::string &output_file)
-{
+// output an exr file
+// assumed to already be BGR
+void saveImageHDR(const float *const image, const size_t numRows, const size_t numCols,
+                  const std::string &output_file) {
   int sizes[2];
   sizes[0] = numRows;
   sizes[1] = numCols;

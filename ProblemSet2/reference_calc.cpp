@@ -3,8 +3,9 @@
 // for uchar4 struct
 #include "reference_calc.h"
 
-void channelConvolution(const unsigned char *const channel, unsigned char *const channelBlurred, const size_t numRows,
-                        const size_t numCols, const float *filter, const int filterWidth) {
+void channelConvolution(const unsigned char *const channel, unsigned char *const channelBlurred,
+                        const size_t numRows, const size_t numCols, const float *filter,
+                        const int filterWidth) {
   // Dealing with an even width filter is trickier
   assert(filterWidth % 2 == 1);
 
@@ -21,7 +22,8 @@ void channelConvolution(const unsigned char *const channel, unsigned char *const
           int image_c = std::min(std::max(c + filter_c, 0), static_cast<int>(numCols - 1));
 
           float image_value = static_cast<float>(channel[image_r * numCols + image_c]);
-          float filter_value = filter[(filter_r + filterWidth / 2) * filterWidth + filter_c + filterWidth / 2];
+          float filter_value =
+              filter[(filter_r + filterWidth / 2) * filterWidth + filter_c + filterWidth / 2];
 
           result += image_value * filter_value;
         }
@@ -32,8 +34,8 @@ void channelConvolution(const unsigned char *const channel, unsigned char *const
   }
 }
 
-void referenceCalculation(const uchar4 *const rgbaImage, uchar4 *const outputImage, size_t numRows, size_t numCols,
-                          const float *const filter, const int filterWidth) {
+void referenceCalculation(const uchar4 *const rgbaImage, uchar4 *const outputImage, size_t numRows,
+                          size_t numCols, const float *const filter, const int filterWidth) {
   unsigned char *red = new unsigned char[numRows * numCols];
   unsigned char *blue = new unsigned char[numRows * numCols];
   unsigned char *green = new unsigned char[numRows * numCols];

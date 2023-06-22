@@ -4,8 +4,8 @@
 
 #include "utils.h"
 
-void compareImages(std::string reference_filename, std::string test_filename, bool useEpsCheck, double perPixelError,
-                   double globalError) {
+void compareImages(std::string reference_filename, std::string test_filename, bool useEpsCheck,
+                   double perPixelError, double globalError) {
   cv::Mat reference = cv::imread(reference_filename, -1);
   cv::Mat test = cv::imread(test_filename, -1);
 
@@ -30,8 +30,8 @@ void compareImages(std::string reference_filename, std::string test_filename, bo
   unsigned char *testPtr = test.ptr<unsigned char>(0);
 
   if (useEpsCheck) {
-    checkResultsEps(referencePtr, testPtr, reference.rows * reference.cols * reference.channels(), perPixelError,
-                    globalError);
+    checkResultsEps(referencePtr, testPtr, reference.rows * reference.cols * reference.channels(),
+                    perPixelError, globalError);
   } else {
     checkResultsExact(referencePtr, testPtr, reference.rows * reference.cols * reference.channels());
   }

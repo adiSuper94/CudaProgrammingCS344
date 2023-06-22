@@ -102,8 +102,8 @@
 
 #include "utils.h"
 
-__global__ void gaussian_blur(const unsigned char* const inputChannel, unsigned char* const outputChannel, int numRows,
-                              int numCols, const float* const filter, const int filterWidth) {
+__global__ void gaussian_blur(const unsigned char* const inputChannel, unsigned char* const outputChannel,
+                              int numRows, int numCols, const float* const filter, const int filterWidth) {
   const unsigned int x = blockDim.x * blockIdx.x + threadIdx.x;
   const unsigned int y = blockDim.y * blockIdx.y + threadIdx.y;
   if (x >= numRows || y >= numCols) {
@@ -176,9 +176,10 @@ __global__ void separateChannels(const uchar4* const inputImageRGBA, int numRows
 // This kernel takes in three color channels and recombines them
 // into one image.  The alpha channel is set to 255 to represent
 // that this image has no transparency.
-__global__ void recombineChannels(const unsigned char* const redChannel, const unsigned char* const greenChannel,
-                                  const unsigned char* const blueChannel, uchar4* const outputImageRGBA, int numRows,
-                                  int numCols) {
+__global__ void recombineChannels(const unsigned char* const redChannel,
+                                  const unsigned char* const greenChannel,
+                                  const unsigned char* const blueChannel, uchar4* const outputImageRGBA,
+                                  int numRows, int numCols) {
   const int x = blockIdx.x * blockDim.x + threadIdx.x;
   const int y = blockIdx.y * blockDim.y + threadIdx.y;
 
@@ -201,8 +202,8 @@ __global__ void recombineChannels(const unsigned char* const redChannel, const u
 unsigned char *d_red, *d_green, *d_blue;
 float* d_filter;
 
-void allocateMemoryAndCopyToGPU(const size_t numRowsImage, const size_t numColsImage, const float* const h_filter,
-                                const size_t filterWidth) {
+void allocateMemoryAndCopyToGPU(const size_t numRowsImage, const size_t numColsImage,
+                                const float* const h_filter, const size_t filterWidth) {
   // allocate memory for the three different channels
   // original
   checkCudaErrors(cudaMalloc(&d_red, sizeof(unsigned char) * numRowsImage * numColsImage));
@@ -221,14 +222,15 @@ void allocateMemoryAndCopyToGPU(const size_t numRowsImage, const size_t numColsI
   // on the GPU.  cudaMemcpy(dst, src, numBytes, cudaMemcpyHostToDevice);
   // Remember to use checkCudaErrors!
   checkCudaErrors(cudaMemset(d_filter, 0, sizeof(float) * filterWidth * filterWidth));
-  checkCudaErrors(cudaMemcpy(d_filter, h_filter, sizeof(float) * filterWidth * filterWidth, cudaMemcpyHostToDevice));
+  checkCudaErrors(
+      cudaMemcpy(d_filter, h_filter, sizeof(float) * filterWidth * filterWidth, cudaMemcpyHostToDevice));
   cudaDeviceSynchronize();
 }
 
 void your_gaussian_blur(const uchar4* const h_inputImageRGBA, uchar4* const d_inputImageRGBA,
                         uchar4* const d_outputImageRGBA, const size_t numRows, const size_t numCols,
-                        unsigned char* d_redBlurred, unsigned char* d_greenBlurred, unsigned char* d_blueBlurred,
-                        const int filterWidth) {
+                        unsigned char* d_redBlurred, unsigned char* d_greenBlurred,
+                        unsigned char* d_blueBlurred, const int filterWidth) {
   // Set reasonable block size (i.e., number of threads per block)
   const dim3 blockSize(16, 16);
 
@@ -255,8 +257,8 @@ void your_gaussian_blur(const uchar4* const h_inputImageRGBA, uchar4* const d_in
   //
   // NOTE: This kernel launch depends on the gridSize and blockSize variables,
   // which you must set yourself.
-  recombineChannels<<<gridSize, blockSize>>>(d_redBlurred, d_greenBlurred, d_blueBlurred, d_outputImageRGBA, numRows,
-                                             numCols);
+  recombineChannels<<<gridSize, blockSize>>>(d_redBlurred, d_greenBlurred, d_blueBlurred, d_outputImageRGBA,
+                                             numRows, numCols);
   cudaDeviceSynchronize();
   checkCudaErrors(cudaGetLastError());
 }

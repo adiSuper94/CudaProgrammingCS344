@@ -29,7 +29,8 @@ void checkResultsExact(const T *const ref, const T *const gpu, size_t numElem) {
       std::cerr << "Difference at pos " << i << std::endl;
       // the + is magic to convert char to int without messing
       // with other types
-      std::cerr << "Reference: " << std::setprecision(17) << +ref[i] << "\nGPU      : " << +gpu[i] << std::endl;
+      std::cerr << "Reference: " << std::setprecision(17) << +ref[i] << "\nGPU      : " << +gpu[i]
+                << std::endl;
       exit(1);
     }
   }
@@ -49,16 +50,18 @@ void checkResultsEps(const T *const ref, const T *const gpu, size_t numElem, dou
       numSmallDifferences++;
     } else if (diff > eps1) {
       std::cerr << "Difference at pos " << +i << " exceeds tolerance of " << eps1 << std::endl;
-      std::cerr << "Reference: " << std::setprecision(17) << +ref[i] << "\nGPU      : " << +gpu[i] << std::endl;
+      std::cerr << "Reference: " << std::setprecision(17) << +ref[i] << "\nGPU      : " << +gpu[i]
+                << std::endl;
       exit(1);
     }
     totalDiff += diff * diff;
   }
   double percentSmallDifferences = (double)numSmallDifferences / (double)numElem;
   if (percentSmallDifferences > eps2) {
-    std::cerr << "Total percentage of non-zero pixel difference between the two images exceeds " << 100.0 * eps2 << "%"
+    std::cerr << "Total percentage of non-zero pixel difference between the two images exceeds "
+              << 100.0 * eps2 << "%" << std::endl;
+    std::cerr << "Percentage of non-zero pixel differences: " << 100.0 * percentSmallDifferences << "%"
               << std::endl;
-    std::cerr << "Percentage of non-zero pixel differences: " << 100.0 * percentSmallDifferences << "%" << std::endl;
     exit(1);
   }
 }
@@ -66,7 +69,8 @@ void checkResultsEps(const T *const ref, const T *const gpu, size_t numElem, dou
 // Uses the autodesk method of image comparison
 // Note the the tolerance here is in PIXELS not a percentage of input pixels
 template <typename T>
-void checkResultsAutodesk(const T *const ref, const T *const gpu, size_t numElem, double variance, size_t tolerance) {
+void checkResultsAutodesk(const T *const ref, const T *const gpu, size_t numElem, double variance,
+                          size_t tolerance) {
   size_t numBadPixels = 0;
   for (size_t i = 0; i < numElem; ++i) {
     T smaller = std::min(ref[i], gpu[i]);

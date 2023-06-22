@@ -17,11 +17,11 @@
 
 void your_gaussian_blur(const uchar4 *const h_inputImageRGBA, uchar4 *const d_inputImageRGBA,
                         uchar4 *const d_outputImageRGBA, const size_t numRows, const size_t numCols,
-                        unsigned char *d_redBlurred, unsigned char *d_greenBlurred, unsigned char *d_blueBlurred,
-                        const int filterWidth);
+                        unsigned char *d_redBlurred, unsigned char *d_greenBlurred,
+                        unsigned char *d_blueBlurred, const int filterWidth);
 
-void allocateMemoryAndCopyToGPU(const size_t numRowsImage, const size_t numColsImage, const float *const h_filter,
-                                const size_t filterWidth);
+void allocateMemoryAndCopyToGPU(const size_t numRowsImage, const size_t numColsImage,
+                                const float *const h_filter, const size_t filterWidth);
 
 /*******  Begin main *********/
 
@@ -64,8 +64,9 @@ int main(int argc, char **argv) {
       globalError = atof(argv[5]);
       break;
     default:
-      std::cerr << "Usage: ./HW2 input_file [output_filename] [reference_filename] [perPixelError] [globalError]"
-                << std::endl;
+      std::cerr
+          << "Usage: ./HW2 input_file [output_filename] [reference_filename] [perPixelError] [globalError]"
+          << std::endl;
       exit(1);
   }
   // load the image and give us our input and output pointers
@@ -76,8 +77,8 @@ int main(int argc, char **argv) {
   GpuTimer timer;
   timer.Start();
   // call the students' code
-  your_gaussian_blur(h_inputImageRGBA, d_inputImageRGBA, d_outputImageRGBA, numRows(), numCols(), d_redBlurred,
-                     d_greenBlurred, d_blueBlurred, filterWidth);
+  your_gaussian_blur(h_inputImageRGBA, d_inputImageRGBA, d_outputImageRGBA, numRows(), numCols(),
+                     d_redBlurred, d_greenBlurred, d_blueBlurred, filterWidth);
   timer.Stop();
   cudaDeviceSynchronize();
   checkCudaErrors(cudaGetLastError());

@@ -22,8 +22,8 @@ size_t numCols() { return imageRGBA.cols; }
 // returns a pointer to an RGBA version of the input image
 // and a pointer to the single channel grey-scale output
 // on both the host and device
-void preProcess(uchar4 **inputImage, unsigned char **greyImage, uchar4 **d_rgbaImage, unsigned char **d_greyImage,
-                const std::string &filename) {
+void preProcess(uchar4 **inputImage, unsigned char **greyImage, uchar4 **d_rgbaImage,
+                unsigned char **d_greyImage, const std::string &filename) {
   // make sure the context initializes ok
   checkCudaErrors(cudaFree(0));
 
@@ -53,8 +53,9 @@ void preProcess(uchar4 **inputImage, unsigned char **greyImage, uchar4 **d_rgbaI
   // allocate memory on the device for both input and output
   checkCudaErrors(cudaMalloc(d_rgbaImage, sizeof(uchar4) * numPixels));
   checkCudaErrors(cudaMalloc(d_greyImage, sizeof(unsigned char) * numPixels));
-  checkCudaErrors(cudaMemset(*d_greyImage, 0,
-                             numPixels * sizeof(unsigned char)));  // make sure no memory is left laying around
+  checkCudaErrors(
+      cudaMemset(*d_greyImage, 0,
+                 numPixels * sizeof(unsigned char)));  // make sure no memory is left laying around
 
   // copy input array to the GPU
   checkCudaErrors(cudaMemcpy(*d_rgbaImage, *inputImage, sizeof(uchar4) * numPixels, cudaMemcpyHostToDevice));

@@ -26,7 +26,8 @@ size_t numCols() { return imageInputRGBA.cols; }
 // on both the host and device
 void preProcess(uchar4 **h_inputImageRGBA, uchar4 **h_outputImageRGBA, uchar4 **d_inputImageRGBA,
                 uchar4 **d_outputImageRGBA, unsigned char **d_redBlurred, unsigned char **d_greenBlurred,
-                unsigned char **d_blueBlurred, float **h_filter, int *filterWidth, const std::string &filename) {
+                unsigned char **d_blueBlurred, float **h_filter, int *filterWidth,
+                const std::string &filename) {
   // make sure the context initializes ok
   checkCudaErrors(cudaFree(0));
 
@@ -55,11 +56,12 @@ void preProcess(uchar4 **h_inputImageRGBA, uchar4 **h_outputImageRGBA, uchar4 **
   // allocate memory on the device for both input and output
   checkCudaErrors(cudaMalloc(d_inputImageRGBA, sizeof(uchar4) * numPixels));
   checkCudaErrors(cudaMalloc(d_outputImageRGBA, sizeof(uchar4) * numPixels));
-  checkCudaErrors(
-      cudaMemset(*d_outputImageRGBA, 0, numPixels * sizeof(uchar4)));  // make sure no memory is left laying around
+  checkCudaErrors(cudaMemset(*d_outputImageRGBA, 0,
+                             numPixels * sizeof(uchar4)));  // make sure no memory is left laying around
 
   // copy input array to the GPU
-  checkCudaErrors(cudaMemcpy(*d_inputImageRGBA, *h_inputImageRGBA, sizeof(uchar4) * numPixels, cudaMemcpyHostToDevice));
+  checkCudaErrors(
+      cudaMemcpy(*d_inputImageRGBA, *h_inputImageRGBA, sizeof(uchar4) * numPixels, cudaMemcpyHostToDevice));
 
   d_inputImageRGBA__ = *d_inputImageRGBA;
   d_outputImageRGBA__ = *d_outputImageRGBA;
@@ -88,7 +90,8 @@ void preProcess(uchar4 **h_inputImageRGBA, uchar4 **h_outputImageRGBA, uchar4 **
 
   for (int r = -blurKernelWidth / 2; r <= blurKernelWidth / 2; ++r) {
     for (int c = -blurKernelWidth / 2; c <= blurKernelWidth / 2; ++c) {
-      (*h_filter)[(r + blurKernelWidth / 2) * blurKernelWidth + c + blurKernelWidth / 2] *= normalizationFactor;
+      (*h_filter)[(r + blurKernelWidth / 2) * blurKernelWidth + c + blurKernelWidth / 2] *=
+          normalizationFactor;
     }
   }
 
