@@ -9,6 +9,7 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 
 #define checkCudaErrors(val) check((val), #val, __FILE__, __LINE__)
 

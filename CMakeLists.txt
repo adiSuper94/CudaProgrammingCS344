@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 project(CS344 LANGUAGES CXX CUDA)
 set(CMAKE_CUDA_STANDARD 17)
-set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -Xclang -fcuda-allow-variadic-functions")
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} ${CMAKE_CUDA_STANDARD_INCLUDE_DIRECTORIES} ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
 

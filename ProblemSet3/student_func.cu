@@ -79,7 +79,80 @@
 
 */
 
+#include <cfloat>
+#include <cmath>
+#include <cstdlib>
+#include <ostream>
+
 #include "utils.h"
+
+__global__ void find_min_max(const float* const vals, float* min, bool findMin, int size) {
+  extern __shared__ float sdata[];
+  unsigned long id = blockDim.x * blockIdx.x + threadIdx.x;
+  sdata[threadIdx.x] = vals[id];
+  __syncthreads();
+  for (int i = blockDim.x / 2; i > 0; i = i / 2) {
+    if (threadIdx.x < i) {
+      if (findMin) {
+        sdata[threadIdx.x] = std::fmin(sdata[threadIdx.x], sdata[threadIdx.x + i]);
+      } else {
+        sdata[threadIdx.x] = std::fmax(sdata[threadIdx.x], sdata[threadIdx.x + i]);
+      }
+    }
+    __syncthreads();
+  }
+  if (threadIdx.x == 0) {
+    min[blockIdx.x] = sdata[0];
+  }
+  return;
+}
+
+__global__ void compute_histogram(const float* const vals, unsigned int* const d_hist, float bucketWidth,
+                                  float min) {
+  unsigned int id = blockDim.x * blockIdx.x + threadIdx.x;
+  float val = vals[id];
+  unsigned int bucketId = (unsigned int)((val - min) / bucketWidth);
+  atomicAdd(&d_hist[bucketId], 1);
+}
+
+__global__ void scan_hist(unsigned int* const d_vals, int size) {
+  int id = blockDim.x * blockIdx.x + threadIdx.x;
+  if (id >= size) {
+    return;
+  }
+  for (int i = 1; i < size; i *= 2) {
+    int old = 0;
+    if (id - i >= 0) {
+      old = d_vals[id - i];
+    }
+    __syncthreads();
+    if (id - i >= 0) {
+      d_vals[i] += old;
+    }
+    __syncthreads();
+  }
+  if (id == 0) {
+    for (int i = size - 1; i > 0; i--) {
+      d_vals[i] = d_vals[i - 1];
+    }
+    d_vals[0] = 0;
+  }
+}
+
+float findMinMax(const float* const d_logLuminance, dim3 gridSize, dim3 blockSize, bool findMin,
+                 unsigned int size) {
+  float *d_minLogLum, *d_res;
+  checkCudaErrors(cudaMalloc(&d_minLogLum, sizeof(float) * gridSize.x));
+  checkCudaErrors(cudaMalloc(&d_res, sizeof(float) * 1));
+  find_min_max<<<gridSize, blockSize, blockSize.x * sizeof(float)>>>(d_logLuminance, d_minLogLum, findMin,
+                                                                     size);
+  find_min_max<<<1, gridSize, gridSize.x * sizeof(float)>>>(d_minLogLum, d_res, findMin, size);
+  float h_res;
+  checkCudaErrors(cudaMemcpy(&h_res, d_res, sizeof(float), cudaMemcpyDeviceToHost));
+  checkCudaErrors(cudaFree(d_minLogLum));
+  checkCudaErrors(cudaFree(d_res));
+  return h_res;
+}
 
 void your_histogram_and_prefixsum(const float* const d_logLuminance, unsigned int* const d_cdf,
                                   float& min_logLum, float& max_logLum, const size_t numRows,
@@ -94,4 +167,16 @@ void your_histogram_and_prefixsum(const float* const d_logLuminance, unsigned in
     4) Perform an exclusive scan (prefix sum) on the histogram to get
        the cumulative distribution of luminance values (this should go in the
        incoming d_cdf pointer which already has been allocated for you)       */
+
+  int block_x = 1024;
+  const dim3 blockSize(block_x, 1, 1);
+  unsigned int grid_x = ((numRows * numCols) + (block_x - 1)) / block_x;
+  const dim3 gridSize(grid_x, 1, 1);
+  min_logLum = findMinMax(d_logLuminance, gridSize, blockSize, true, numRows * numCols);
+  max_logLum = findMinMax(d_logLuminance, gridSize, blockSize, false, numRows * numCols);
+  std::cout << min_logLum << ", " << max_logLum << std::endl;
+  float range = max_logLum - min_logLum;
+  float bucketWidth = range / numBins;
+  compute_histogram<<<gridSize, blockSize>>>(d_logLuminance, d_cdf, bucketWidth, min_logLum);
+  scan_hist<<<gridSize, blockSize>>>(d_cdf, numBins);
 }
