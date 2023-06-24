@@ -118,9 +118,6 @@ __global__ void compute_histogram(const float* const vals, unsigned int* const d
 
 __global__ void scan_hist(unsigned int* const d_vals, int size) {
   int id = blockDim.x * blockIdx.x + threadIdx.x;
-  if (id >= size) {
-    return;
-  }
   for (int i = 1; i < size; i *= 2) {
     int old = 0;
     if (id - i >= 0) {
@@ -128,7 +125,7 @@ __global__ void scan_hist(unsigned int* const d_vals, int size) {
     }
     __syncthreads();
     if (id - i >= 0) {
-      d_vals[i] += old;
+      d_vals[id] += old;
     }
     __syncthreads();
   }
@@ -183,6 +180,30 @@ void test_minmax() {
   free(h_arr);
 }
 
+#define TEST_BIN_LEN 8
+void test_scan() {
+  unsigned int* d_arr;
+  checkCudaErrors(cudaMalloc(&d_arr, sizeof(unsigned int) * TEST_ARR_LEN));
+  unsigned int* h_arr = (unsigned int*)malloc(TEST_ARR_LEN * sizeof(unsigned int));
+  for (int i = 0; i < TEST_ARR_LEN; i++) {
+    h_arr[i] = 1;
+  }
+  for (int i = 0; i < TEST_BIN_LEN; i++) {
+    std::cout << h_arr[i] << " ";
+  }
+  std::cout << "\n";
+  checkCudaErrors(cudaMemcpy(d_arr, h_arr, TEST_ARR_LEN * sizeof(unsigned int), cudaMemcpyHostToDevice));
+  cudaDeviceSynchronize();
+  scan_hist<<<1, TEST_BIN_LEN>>>(d_arr, TEST_BIN_LEN);
+  cudaDeviceSynchronize();
+  checkCudaErrors(cudaMemcpy(h_arr, d_arr, TEST_ARR_LEN * sizeof(unsigned int), cudaMemcpyDeviceToHost));
+  checkCudaErrors(cudaFree(d_arr));
+  for (int i = 0; i < TEST_BIN_LEN; i++) {
+    std::cout << h_arr[i] << " ";
+  }
+  free(h_arr);
+}
+
 void your_histogram_and_prefixsum(const float* const d_logLuminance, unsigned int* const d_cdf,
                                   float& min_logLum, float& max_logLum, const size_t numRows,
                                   const size_t numCols, const size_t numBins) {
@@ -200,12 +221,13 @@ void your_histogram_and_prefixsum(const float* const d_logLuminance, unsigned in
   unsigned int blockLen = 1024;
   min_logLum = findMinMax(d_logLuminance, blockLen, true, numRows * numCols);
   max_logLum = findMinMax(d_logLuminance, blockLen, false, numRows * numCols);
-  std::cout << min_logLum << ", " << max_logLum << std::endl;
+  // std::cout << min_logLum << ", " << max_logLum << std::endl;
   float range = max_logLum - min_logLum;
   float bucketWidth = range / numBins;
   unsigned int gridLen = ((numRows * numCols) + (blockLen - 1)) / blockLen;
   compute_histogram<<<gridLen, blockLen>>>(d_logLuminance, d_cdf, bucketWidth, min_logLum, numRows * numCols);
   scan_hist<<<1, numBins>>>(d_cdf, numBins);
-  std::cout << "calling test " << std::endl;
-  test_minmax();
+  // std::cout << "calling test " << std::endl;
+  // test_minmax();
+  // test_scan();
 }
